@@ -43,6 +43,14 @@ holding it. Pointed at the folder, the compiler fails with
 `could not open: C:\Wincupl\Shared`, which reads like a permissions problem
 and is not one.
 
+## Install it in one line
+
+    curl -fsSL https://raw.githubusercontent.com/exxosuk/wincupl-mx-linux/master/install.sh | bash
+
+That downloads this repository and runs the installer. Nothing else is
+fetched, nothing needs mounting, and WinCUPL appears in the application menu
+when it finishes.
+
 ## Usage
 
     ./wincupl-install.sh install            # uses the bundled copy
