@@ -53,6 +53,17 @@ do_install() {
         sudo apt update
         sudo apt install -y wine
     fi
+    # WinCUPL is a 32-bit executable. Even in a 64-bit prefix, Wine needs the
+    # 32-bit loader (wine32) to run it through WoW64. Without it the process
+    # exits silently -- "failed to load syswow64/ntdll.dll" in the log, nothing
+    # on screen. The check above only ensures `wine` is present, which on a
+    # 64-bit system means wine64 alone; wine32:i386 must be installed separately.
+    if ! dpkg -l wine32 2>/dev/null | grep -q '^ii'; then
+        echo "    Installing wine32 (needed for 32-bit programs)..."
+        sudo dpkg --add-architecture i386 2>/dev/null || true
+        sudo apt update
+        sudo apt install -y wine32:i386
+    fi
     command -v curl >/dev/null 2>&1 || sudo apt install -y curl
     command -v cabextract >/dev/null 2>&1 || sudo apt install -y cabextract
     command -v wrestool >/dev/null 2>&1 || sudo apt install -y icoutils
