@@ -1,0 +1,59 @@
+Name     test1 ;
+PartNo   00 ;
+Date     2018 ;
+Revision 02 ;
+Designer exxos ;
+Company   ;
+Assembly None ;
+Location  ;
+Device   g22v10 ;
+
+
+
+/* *************** INPUT PINS ******************** */
+PIN     1 = IP1 ;  
+PIN     2 = IP2 ;  
+PIN     3 = IP3 ;     
+PIN     4 = IP4 ;    /* RESET PIN TIE TO 5V FOR ATF22V10  */
+PIN     5 = IP5 ; 
+PIN     6 = IP6 ;    
+PIN     7 = IP7 ; 
+PIN     8 = IP8 ;   
+PIN     9 = IP9 ;  
+PIN     10 = IP10 ;
+PIN     11 = IP11 ;
+PIN     13 = IP12; /*  INPUT ONLY PIN ? */ 
+
+
+/* *************** OUTPUT PINS ******************** */
+
+PIN     14 = OP1;  
+PIN     15 = OP2;  
+PIN     16 = OP3;  
+PIN     17 = OP4;  
+PIN     18 = OP5;  
+PIN     19 = OP6;  
+PIN     20 = OP7;  
+PIN     21 = OP8;  
+PIN     23 = OP9;  
+PIN     22 = OP10;  
+
+/* Power Pins */
+PIN    12 = GND ; /*CPU PIN 16   */
+PIN    24 = VCC ;/* CPU PIN 14  */
+
+
+/* Equations */
+
+
+OP1 = IP1;
+OP2 = IP2;
+OP3 = IP3;
+
+OP4 = !IP4;
+OP5 = !IP5;
+OP6 = !IP6;
+
+OP7 = IP7 & IP8;
+
+

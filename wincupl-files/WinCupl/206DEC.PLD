@@ -1,0 +1,121 @@
+Name     206dec ;
+PartNo   00 ;
+Date     31/01/2020 ;
+Revision 02 ;
+Designer exxos ;
+Company  exxos ;
+Assembly None ;
+Location  bedroom;
+Device   f1502isptqfp44;
+
+
+//TOS206 decoder & V1.5 booster.  (c) exxos 
+//tested with TOS206 and TOS104, with blitter. 
+
+
+
+PROPERTY ATMEL {JTAG = ON};
+PROPERTY ATMEL {LOGIC_DOUBLING = OFF};
+PROPERTY ATMEL {CASCADE_LOGIC = OFF};
+PROPERTY ATMEL {PREASSIGN keep};
+property ATMEL {OUTPUT_FAST ON};
+property ATMEL {POWER_RESET ON};
+property ATMEL {PIN_KEEP OFF};
+
+
+//PIN 1     =                         ; /* TDI                                */ 
+PIN 2     =  A1                       ; /*                                 */ 
+PIN 3     =  A2                       ; /*                                 */ 
+//PIN 4     =                         ; /* GND                                */ 
+PIN 5     =  A3                       ; /*                                 */ 
+PIN 6     =  A4                       ; /*                                 */ 
+//PIN 7     =                         ; /* TMS                                */ 
+PIN 8     =  A5                       ; /*                                 */ 
+//PIN 9     =                         ; /* VCC                                */ 
+PIN 10     =  A6                       ; /*                                 */ 
+PIN 11     =  A7                       ; /*                                 */ 
+PIN 12     =  A8                       ; /*                                 */ 
+PIN 13     =  A9                       ; /*                                 */ 
+PIN 14     =  A10                       ; /*                                 */ 
+PIN 15     =  A11                       ; /*                                 */ 
+//PIN 16     =                         ; /* GND                                */ 
+//PIN 17     =                         ; /* VCC                                */ 
+PIN 18     =  A12                       ; /*                                 */ 
+PIN 19     =  A13                       ; /*                                 */ 
+PIN 20     =  A14                       ; /*                                 */ 
+PIN 21     =  A15                       ; /*                                 */ 
+PIN 22     =  A16                       ; /*                                 */ 
+PIN 23     =  A17                       ; /*                                 */ 
+//PIN 24     =                         ; /* GND                                */ 
+PIN 25     =  A18                       ; /*                                 */ 
+//PIN 26     =                         ; /* TCK                                */ 
+PIN 27     =  A19                       ; /*                                 */ 
+PIN 28     =  A20                       ; /*                                 */ 
+//PIN 29     =                         ; /* VCC                                */ 
+PIN 30     =  A21                       ; /*                                 */ 
+PIN 31     =  A22                       ; /*                                 */ 
+//PIN 32     =                         ; /* TDO                                */ 
+PIN 33     =  A23                       ; /*                                 */ 
+PIN 34     =  ST_AS                       ; /*                                 */ 
+PIN 35     =  ST_DTACK                       ; /*                                 */ 
+//PIN 36     =                         ; /* GND                                */ 
+PIN 37     =  CLK16                       ; /*                                 */ 
+PIN 38     =  BG_SYS                       ; /*                                 */ 
+PIN 39     =  BG_CPU                       ; /*                                 */ 
+PIN 40     =  SW                       ; /*   SEL  GND = OFF                              */ 
+//PIN 41     =                         ; /* VCC                                */ 
+PIN 42     =  !ROM_OE                       ; /*                                 */ 
+PIN 43     =  CPU_CLK                       ; /*                                 */ 
+PIN 44     =  CLK8                       ; /*                                 */ 
+
+PINNODE = CLK_SEL;
+
+
+/*  ROM decoding */
+/*
+field ADDR = [A23..1];
+ROM_OE = ADDR:[FC0000..FEFFFF] & !ST_AS  //104
+	# ADDR:[000000..000007] & !ST_AS  //boot
+	# ADDR:[E00000..EFFFFF] & !ST_AS  //206
+	;
+*/
+
+/* SET DTACK ON ROM ACCESS */
+ST_DTACK = 'b'0;
+ST_DTACK.OE =  ROM_OE & !ST_AS;
+
+CPU_CLK = CLK8;
+
+
+/* RE-SYNC BG */
+BG_SYS.CK = CLK8;
+BG_SYS.D = BG_CPU # !ST_AS;
+BG_SYS.OE = !BG_CPU & ST_AS; 
+
+
+
+/* 16MHz mode when no bus access or ROM access */
+
+/*
+CLK_SEL.CK = CLK16;
+CLK_SEL.d =  ST_AS & CLK8 & SW  & BG_SYS & BG_CPU     
+           # ST_AS & CLK_SEL & SW & BG_SYS & BG_CPU 
+	    # ROM_OE & CLK8 & SW   & BG_SYS & BG_CPU      // & ST_AS  
+           # ROM_OE & CLK_SEL & SW  & BG_SYS & BG_CPU   // & ST_AS
+	    # !CLK8 & CLK_SEL;
+
+*/
+
+/* Clock Sync */
+
+/*
+CPU_CLK = CLK8 & !CLK_SEL
+      # CLK16 & CLK_SEL
+	# CPU_CLK & CLK8 & CLK16;  // avoid glitch;
+
+*/
+
+
+
+
+

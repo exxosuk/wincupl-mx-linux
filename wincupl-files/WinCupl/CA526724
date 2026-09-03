@@ -1,0 +1,593 @@
+Name     ST-FLASHY-CLOCK-ATF1508;
+PartNo   06;
+Date     2019/05/12;
+Revision 01;
+Designer exxos & icky;
+Company  None;
+Assembly None;
+Location ;
+Device   f1508isptqfp100;
+
+PROPERTY ATMEL {JTAG = ON};
+PROPERTY ATMEL {LOGIC_DOUBLING = OFF};
+PROPERTY ATMEL {CASCADE_LOGIC = OFF};
+PROPERTY ATMEL {PREASSIGN keep};
+property ATMEL {OUTPUT_FAST ON};
+property ATMEL {POWER_RESET ON};
+property ATMEL {PIN_KEEP OFF};
+PROPERTY ATMEL {TDI_PULLUP = ON};
+PROPERTY ATMEL {TMS_PULLUP = ON};
+
+
+// WRITE TO FLASH NOW MOVED TO ABOVE TOS206 SPACE.
+// NOW NEED CRAPPY FLASHY SOFTWARE V3.5
+// FLASH WRITE ENABLE ONLY WHEN MB ROM IS USED AND ACCESSING ABOVE TOS206 SPACE
+//V5 now moved to 1508
+
+//50A - latched the "temp" flash select register - so we can select and store flash bank selections (mostly for programming)
+//50B now using RTC register instead of many registers - NOT WORKING RIGHT REGS NOT WORKING
+//50B SUSPECT .OE ISSUE, SO RENAMEED PINS WITH _OP  -NOPE :(
+//CODE WORKING
+
+//50C optimising / cleanup 50B code only 
+
+//blitter fix D
+// E - HD format option 
+
+
+PIN  1 = ST_BG; 
+PIN  2 = ST_DTACK; 
+/* PIN  3 = VCC; */        /* VCC         pwr      VCC           */
+PIN  4 = TDI;              /* IO8_TDI    io        TDI           */
+PIN  5 = A5; 			 /* A5    io        A5           */
+PIN  6 = A6;           /* IO7         io       RTC_CS        */
+PIN  7 = A7;         /* GND         pwr      GND           */
+PIN  8 = A8;           /* IO6         io       RTC_AS        */
+PIN  9 = A18;           /* IO5         io       RTC_RW        */
+PIN  10 = A19;        /* IO14        io       JP1_PIN1      */
+/* PIN  11 = GND; */       /* GND         pwr      GND           */
+PIN  12 = A22;        /* IO3_PD1     io       JP1_PIN2      */
+PIN  13 = A21;        /* IO2         io       JP1_PIN3      */
+PIN  14 = A20;        /* IO1         io       JP1_PIN4      */
+PIN  15 = TMS;             /* IO32_TMS    io       TMS           */
+PIN  16 = A9;             /* IO31        io       A11           */
+PIN  17 = A10;              /* IO30        io       A1            */
+/* PIN  18 = VCC; */       /* VCC         pwr      VCC           */
+PIN  19 = A11;              /* IO29        io       A2            */
+PIN  20 = A12;              /* IO28        io       A3            */
+PIN  21 = A13;              /* IO27        io       A4            */
+/* PIN  22 = NC; */
+/* PIN  23 = NC; */             /* IO26        io       A5            */
+/* PIN  24 = NC; */
+/* PIN  25 = NC; */             /* IO25        io       A6            */
+/* PIN  26 = GND; */       /* GND         pwr      GND           */
+/* PIN  27 = NC; */
+/* PIN  28 = NC; */
+/* PIN  29 = NC; */             /* IO24        io       A7            */
+/* PIN  30 = NC; */             /* IO23        io       A8            */
+/* PIN  31 = NC; */             /* IO22        io       A9            */
+PIN  32 = RTC_CS;            /* IO21        io       A10           */
+PIN  33 = RTC_AS;            /* IO20        io       A12           */
+/* PIN  34 = VCC; */       /* VCC         pwr      VCC           */
+PIN  35 = RTC_RW;             /* IO19        io       A13           */
+PIN  36 = RTC_DS;             /* IO18        io       A14           */
+PIN  37 = RTC_RESET;             /* IO17        io       A15           */
+/* PIN  38 = GND; */       /* GND         pwr      GND           */
+/* PIN  39 = VCC; */       /* VCC         pwr      VCC           */
+/* PIN  40 = NC; */            /* IO33        io       A16           */
+PIN  41 = SRAM_OE;             /* IO34        io       A17           */
+PIN  42 = FLASH_OE;             /* IO35_PD2    io       A18           */
+/* PIN  43 = GND; */       /* GND         pwr      GND           */
+PIN  44 = FLASH_SEL1AOP;             /* IO36        io       A19           */
+PIN  45 = FLASH_SEL1OP;             /* IO37        io       A20           */
+PIN  46 = FLASH_SEL2AOP;             /* IO38        io       A21           */
+PIN  47 = FLASH_SEL2OP;             /* IO39        io       A22           */
+PIN  48 = FLASH_WE;             /* IO40        io       A23           */
+PIN  49 = A17;
+PIN  50 = A16;
+/* PIN  51 = VCC; */       /* VCC         pwr      VCC           */
+PIN  52 = A15;      /* IO41        io       FLASH_SEL2    */
+PIN  53 = A14; 
+PIN  54 = D15;        /* IO42        io       FLASH_WE      */
+PIN  55 = D7; 
+PIN  56 = D14;      /* IO43        io       FLASH_SEL1    */
+PIN  57 = D6;        /* IO44        io       FLASH_OE      */
+PIN  58 = D13;           /* IO45        io       ST_RW         */
+/* PIN  59 = GND; */       /* GND         pwr      GND           */
+PIN  60 = D5;           /* IO46        io       ST_AS         */
+PIN  61 = D12;          /* IO47        io       CPU_AS        */
+PIN  62 = TCK;             /* IO48_TCK    io       TCK           */
+PIN  63 = D4;        /* IO49        io       ST_BGACK      */
+PIN  64 = D11;       /* IO50        io       RTC_RESET     */
+PIN  65 = D3;          /* IO51        io       RTC_DS        */
+/* PIN  66 = VCC10 ; */    /* VCCIO       pwr      VCCIO         */
+PIN  67 = D10;        /* IO52        io       FREE          */
+PIN  68 = D2;       /* IO53        io       CPU_DTACK     */
+PIN  69 = D9;       /* IO54        io       CPU_RESET     */
+PIN  70 = D1;
+PIN  71 = D8;             /* IO55        io       D15           */
+PIN  72 = D0;
+PIN  73 = TDO;             /* IO56_TDO    io       TDO           */
+PIN  75 = A4;             /* IO57        io       D14           */
+PIN  76 = A3;             /* IO58        io       D13           */
+PIN  77 = A2;
+PIN  78 = A1;
+PIN  79 = EXT_ROM_DIS;             /* IO59        io       D12           */
+PIN  80 = GLUE_ROM_CE;             /* IO60        io       D11           */
+PIN  81 = CPU_RESET;             /* IO61        io       D10           */
+/* PIN  82 = VCC; */       /* VCC         pwr      VCC           */
+PIN  83 = ST_BR;              /* IO62        io       D9            */
+PIN  84 = ST_BGACK;              /* IO63        io       D8            */
+PIN  85 = clk_16;           /* IO64_GCLK3  io       DRIVE MB ROM          */
+/* PIN  86 = GND; */       /* GND         pwr      GND           */
+/* PIN  87 = NC; */          /* GCLK1       io       FREE          */
+/* PIN  88 = NC; */        /* OE1         io       ROM_DIS       */
+PIN  89 = ST_RESET;        /* GCLR        io       RESET         */
+PIN  90 = clk_8;           /* OE2/GCLK2   io       CLK           */
+/* PIN  91 = VCC; */       /* VCC         pwr      VCC           */
+PIN  92 = ST_RW;              /* IO55        io       D7            */
+PIN  93 = A23;              /* IO55        io       D6            */
+PIN  94 = CPU_CLK;              /* IO55        io       D5            */
+/* PIN  59 = GND; */       /* GND         pwr      GND           */
+PIN  96 = ST_RESET_OP;              /* IO55        io       D4            */
+PIN  97 = CPU_DTACK;              /* IO55        io       D3            */
+PIN  98 = CPU_BG;              /* IO55        io       D2            */
+PIN  99 = CPU_AS;              /* IO55        io       D1            */
+PIN 100 = ST_AS;              /* IO55        io       D0            */
+
+
+PINNODE  0  = ROM_CS;
+PINNODE  0  = DT1;
+PINNODE  0  = DT2;
+PINNODE  0  = DT3;
+PINNODE  0  = DT4;
+
+//RESET DELAY FF CHAIN
+
+PINNODE  0  = RST1;
+PINNODE  0  = RST2;
+PINNODE  0  = RST3;
+PINNODE  0  = RST4;
+PINNODE  0  = RST5;
+PINNODE  0  = RST6;
+
+PINNODE  0  = PA; // pulse address
+PINNODE  0  = PD; // pulse data
+
+PINNODE  0  = RTCAL;  // RTC LATCH ADDRESS
+PINNODE  0  = RTCDL;  // RTC LATCH DATA
+PINNODE  0  = BANKSEL; // BANK SELECTED
+
+PINNODE  0  = BS1;
+PINNODE  0  = BS2;
+PINNODE  0  = BS3;
+
+PINNODE  0  = RTC_ADDRESS;
+PINNODE  0  = RTC_DATA;
+
+
+PINNODE  0  = TMP;
+PINNODE  0  = TMP2;
+PINNODE  0  = TMP4;
+PINNODE  0  = FLASH_DTACK;
+
+PINNODE  0  = ROM_DIS;
+PINNODE  0  = ROM_SEL;
+
+PINNODE  0  = FREG1;  // flash register 1 
+PINNODE  0  = FREG2;
+PINNODE  0  = FREG3;
+PINNODE  0  = FREG4;
+PINNODE  0  = FREGA; // flash register access
+
+
+//PINNODE  0  = RESET_TRIGGER;
+PINNODE  0  = RB1;
+PINNODE  0  = RB2;
+PINNODE  0  = RB3;
+PINNODE  0  = RB4;
+PINNODE  0  = RB5;
+PINNODE  0  = RB6;
+PINNODE  0  = RB7;
+PINNODE  0  = RB8;
+PINNODE  0  = RB9;
+PINNODE  0  = RB10;
+PINNODE  0  = TMP3;
+
+PINNODE  0  = SRAMEN;
+
+//clock division 
+PINNODE  0  = CLK4;   
+PINNODE  0  = CLK2;
+PINNODE  0  = CLK1;
+PINNODE  0  = CLK05;
+PINNODE  0  = CLK025;
+
+CLK4.CK = clk_8;
+CLK4.D = !CLK4;
+
+CLK2.CK = CLK4;
+CLK2.D = !CLK2;
+
+CLK1.CK = CLK2;
+CLK1.D = !CLK1;
+
+CLK05.CK = CLK1;
+CLK05.D = !CLK05; // 500KHz clock
+
+CLK025.CK = CLK05;
+CLK025.D = !CLK025; // 250KHz clock
+
+//FLASH SELECTS ALL INTERNAL LATCHED, PUSHED TO EXTERNAL REGISTERS FOR TRI-STATE
+PINNODE  0  = FLASH_SEL1;
+PINNODE  0  = FLASH_SEL1A;
+PINNODE  0  = FLASH_SEL2;
+PINNODE  0  = FLASH_SEL2A;
+
+
+FLASH_SEL1OP = FLASH_SEL1;
+FLASH_SEL2OP = FLASH_SEL2;
+FLASH_SEL1AOP = FLASH_SEL1A;
+FLASH_SEL2AOP = FLASH_SEL2A;
+
+
+CPU_CLK = clk_8;
+
+ST_BG = CPU_BG;
+
+ST_AS = CPU_AS ; 		// Connect AS'.... DISABLE MB ROM IF ROM_DIS LO (HI)   # (ROM_CS & !ROM_DIS)
+ST_AS.OE = ST_BGACK   ;   //  & !(ROM_CS & !ROM_DIS)  & !FREGA 
+
+field ADDR = [A23..1];
+TMP4 = ADDR:[FF9200..FF9222] ; // & ST_RW
+
+JP1_PIN3 = TMP4;
+
+
+//full rom address decoding read only
+ROM_CS=   ADDR:[FC0000..FEFFFF]  & ST_RW   //    104  2FFFF = 196607 = 192K
+   	 # ADDR:[000000..000007] & ST_RW  //boot
+    	#  ADDR:[E00000..E3FFFF]  & ST_RW  //  206  FFFFF = 1048575 = 1024K  ( E7FFFF = 7FFFF = 524287 = 512K) E3FFFF = 3FFFF = 262143 = 256K
+		;
+
+
+// ***************************************************************
+// SRAM Code
+// ***************************************************************
+
+//SRAM_OE = 'b'1;  // Disable SRAM
+
+
+// 4MB to 12MB AREA (8MB RAM)
+SRAMEN = ADDR:[400000..C00000];
+
+SRAM_OE = !SRAMEN;
+
+
+
+
+//  **************************************************************
+//If ROM_DIS is high then disable flash, enable MB only
+//if ROM_DIS is low  enable flash, disable MB.  
+//  **************************************************************
+
+//IF BIT3 is set HI ( ROM_SEL) then same as EXT_ROM_DIS BEING SET HIGH
+
+ROM_DIS = EXT_ROM_DIS # ROM_SEL;
+GLUE_ROM_CE = !ROM_CS # !ROM_DIS;
+
+TMP = ADDR:[E40000..E7FFFF];// flashing space
+
+//if flash_WE is low then disable OE
+
+// *****************************************
+// DO NOT SCREW AROUND WITH THE FLASH CODE!
+// *****************************************
+
+FLASH_OE = 'b'0;
+FLASH_OE.OE = (TMP  & !CPU_AS & ST_RW)    // & ROM_DIS
+		# ROM_CS & (!CPU_AS # !ST_AS) & ST_RW & !ROM_DIS   //
+		# FREGA & !CPU_AS             //enable on reg access
+		;
+
+FLASH_DTACK.AR = CPU_AS;
+FLASH_DTACK.CK = clk_8;
+FLASH_DTACK.D = (TMP & !CPU_AS )              //flash DT & ROM_DIS
+  			# ROM_CS  & !CPU_AS;   //ROM DT & !ROM_DIS
+
+//if RW is low (write) and ROM_DIS is high then enable the write pin on flash
+FLASH_WE.CK = clk_8;
+FLASH_WE.D = ST_RW # !ROM_DIS # !TMP # CPU_AS;// 
+
+
+
+
+// ************************************
+// RTC STUFF
+// ************************************
+
+
+//HI ON VALID ADDRESS OR HIGH ON RESET READ
+RTC_ADDRESS = (ADDR:[FF8960] & !CPU_AS) # PA;
+RTC_DATA =    (ADDR:[FF8962] & !CPU_AS) # PD;
+
+//RTC ADDRESS LATCH / MONITOR
+// IF VALID RTC ADDRESS (HI) AND ALL DATALINES ARE HIGH, THEN WE ACESSING REGISTER 7F
+
+RTCAL.CK = clk_8 # !RTC_ADDRESS ; // STALL CLOCK ON NOT RTC ADDRESSES 
+RTCAL.D = D0 & D1 & D2 & D3 & D4 & D5 & D6; // RTC ADDDRESS AND DO-D6 MUST ALL BE HIGH FOR 7F ACCESS  
+
+//D0,D1,D2 are bits used for ROM selects, so do not check status of them. 
+RTCDL.CK = clk_8 # !RTC_DATA  # !D3 # !D4 # !D5 # !D6 # !D7;  
+RTCDL.D = RTCAL & RTC_DATA; 
+
+
+// WE SAW 7F ACCESS, UPDATE THE FLASH BANK NUMBER
+//BANKSEL GOES HI WHEN WE CHANGED THE REGISTER
+BANKSEL = RTCAL & RTCDL ; 
+
+//STORE BANKSEL FOR 2 CLOCKS THEN CLEAR LATCHES
+
+BS1.CK = clk_8;
+BS2.CK = clk_8;
+BS1.D = BANKSEL;
+BS2.D = BS1;
+
+RTCAL.AR = BS2;
+RTCDL.AR = BS2;
+
+//both low = CS HI.  OR either high, CS=0
+!RTC_CS = RTC_ADDRESS # RTC_DATA;
+
+//HI ON ADDRESS
+RTC_AS = RTC_ADDRESS & DT3;
+RTC_DS = RTC_DATA; // & ST_RW ;
+RTC_RW = ST_RW;
+RTC_RESET = ST_RESET;
+
+DT1.CK = clk_8;
+DT2.CK = clk_8;
+DT3.CK = clk_8;
+DT4.CK = clk_8;
+
+DT1.D = RTC_CS # CPU_AS;
+DT2.D = DT1 # CPU_AS;
+DT3.D = DT2 # CPU_AS;
+DT4.D = DT3 # CPU_AS;
+
+CPU_DTACK =  'b'0;
+CPU_DTACK.OE = (!CPU_AS & ST_BGACK & !DT4)   //RTC DTACK
+     		# FLASH_DTACK          // FLASH DTACK
+		# FREGA 		// ROM VERSION REGISTSERS 
+              # TMP2            //STATUS REGISTER 
+		# TMP3			// RESET TRIGGER
+		# SRAMEN            //ALT RAM DTACK
+              # !ST_DTACK;   // CPU_DTACK = ST_DTACK
+
+
+
+
+// ******************************************
+// POWER UP RESET AND READ/SET REGISTERS
+// ******************************************
+
+
+
+/*
+Run ST RESET VIA FF CHAIN TO KEEP CPU_RESET LOW FOR A FEW CYCLES TO GIVE TIME FOR THE RTC STUFF TO HAPPEN
+*/
+
+RST1.CK = clk_8;  
+RST2.CK = clk_8;
+RST3.CK = clk_8;
+RST4.CK = clk_8;
+RST5.CK = clk_8;
+RST6.CK = clk_8;
+
+
+//SHOULD REALLY ADD RESET TO FF - TO DO LATER
+
+RST1.D = ST_RESET;   // WILL FILL FFS ALL 0S ON RESET
+RST2.D = RST1;       // FAKE RTC ADDRESS (CPU ADDRESS BUSES WILL BE ALL 1S) 
+RST3.D = RST2;
+RST4.D = RST3;       //RTC DATA
+RST5.D = RST4;
+RST6.D = RST5;
+
+
+//PULSE ADDRESS HI = ACTIVE
+PA.CK = clk_8;
+PA.D = RST1 & !RST2;
+
+//PULSE DATA
+PD.CK = clk_8;
+PD.D = (RST3 & !RST5) # BANKSEL ; //   
+
+// NEED OE ? NEED PULL UP ? - NOT NEEDED ?
+CPU_RESET = RST6;
+
+//SO IF PD IS HIGH - WE NEED TO LATCH THE ADDRESS INTO THE FLASH SELECT LINES
+
+//bit crappy, keep clock high to disable FF
+FLASH_SEL1.CK = clk_8 # !PD;
+FLASH_SEL2.CK = clk_8 # !PD;
+ROM_SEL.CK = clk_8 # !PD; // enable / disable MB ROM
+
+FLASH_SEL1.D =  D0;
+FLASH_SEL1OP.OE = !FLASH_SEL1AOP.OE; //disable if we accessing the start of flash to get versions !FREGA
+ 
+FLASH_SEL2.D =  D1;
+FLASH_SEL2OP.OE = !FLASH_SEL2AOP.OE; //disable if we accessing the start of flash to get versions
+
+ROM_SEL.D    =  D2;
+
+
+
+
+// ****************************************
+// MIRROR REGISTERS 
+// ****************************************
+
+//WILL ALLOW SOFTWARE TO READ THE INTERNAL STATUS OF THE PLD REGISTERS
+
+TMP2 = ADDR:[FF8964] & ST_RW ; // STATUS REG READ ONLY  & !CPU_AS
+
+D8 = FLASH_SEL1; // NVRAM REG
+D9 = FLASH_SEL2; // NVRAM REG
+D10 = EXT_ROM_DIS; // read the actual jumper OR RTC - if either is HI, then we set the register hi
+
+D11 = FLASH_SEL1A; // PLD TEMP FLASH BANK REG
+D12 = FLASH_SEL2A; // PLD TEMP FLASH BANK REG
+D13 = ROM_SEL; // RTC ROM_DIS SETTING - 
+
+D8.OE = TMP2;
+D9.OE = TMP2;
+D10.OE = TMP2;
+
+D11.OE = TMP2;
+D12.OE = TMP2;
+D13.OE = TMP2;
+
+
+
+// *************************************
+// GET FLASH VERSION - SINGLE REG
+// *************************************
+
+//WHEN THESE REGISTERS ARE ACCESSED, THE MAIN LATCHED FLASH SELECT LINES ARE DISABLED.
+// THIS SHOULD ALLOW US TO SWAP FLASH BANKS TO GET VERSION NUMBERS WITHOUT CRASHING THE OS.. HE HOPES... :)
+
+FREGA = ADDR:[FF8966]  & !ST_RW ; // setting temp regs, or accessing read or write from E40000  - & !CPU_AS doesn't work here ?!
+FLASH_SEL1A.L = D0;
+FLASH_SEL2A.L = D1;
+
+FLASH_SEL1A.LE = FREGA  ; 
+FLASH_SEL2A.LE = FREGA  ; 
+
+//ENABLE THE TEMP FLASH SELECT OUTPUTS
+FLASH_SEL1AOP.OE = FREGA # TMP;
+FLASH_SEL2AOP.OE = FREGA # TMP;
+
+//debug on pin1
+//JP1_PIN1 = FLASH_SEL1A;
+//JP1_PIN2 = FLASH_SEL2A; 
+//
+
+
+
+
+
+
+// *************************************
+// RESET MACHINE
+// *************************************
+
+
+//IF WE WANT TO CHANGE FLASH BANK THE OS WILL CRASH, CURRENTLY THE SOFTWARE PRINTS "RESET MACHINE" ON THE SCREEN AND CHANGES REGISTER (AND CRASHES)
+//ON FUTURE BOARDS, A RESET COMMAND WILL BE SENT TO SOME REGISTER AND WILL ENABLE A RC TIMER OF ABOUT 1 SECOND.
+// SO ISSUES RESET COMMAND - CHANGE REGISTER - CRASH - 1 SECOND LATER THE PLD WILL AUTOMATICALLY RESET THE MACHINE
+// NVRAM IS READ AND MACHINE BOOTS WITH NEW ROM BANK 
+
+//THIS IS TEST CODE AND WILL BE BUFFERED ON THE V6 BOARD
+
+//RESET_TRIGGER.CK = clk_8;
+//RESET_TRIGGER.D = D15; // IF SET TO ZERO THEN WE NEED TO RESET MACHINE IN A BIT
+
+TMP3 = ADDR:[FF8968] & !ST_RW ; // write only 
+
+
+RB1.AR = RB10;
+RB2.AR = RB10;
+RB3.AR = RB10;
+RB4.AR = RB10;
+RB5.AR = RB10;
+RB6.AR = RB10;
+RB7.AR = RB10;
+RB8.AR = RB10;
+RB9.AR = RB10;
+RB10.AR = RB10;
+
+
+RB1.LE = TMP3;
+RB2.CK = CLK025;
+RB3.CK = CLK025;
+RB4.CK = CLK025;
+RB5.CK = CLK025;
+RB6.CK = CLK025;
+RB7.CK = CLK025;
+RB8.CK = CLK025;
+RB9.CK = CLK025;
+RB10.CK = CLK025;
+
+
+RB1.L = TMP3;
+RB2.D = RB1;
+RB3.D = RB2;
+RB4.D = RB3;
+RB5.D = RB4;
+RB6.D = RB5;
+RB7.D = RB6;
+RB8.D = RB7;
+RB9.D = RB8;
+RB10.D = RB9;
+
+
+//ST_RESET WILL AFTER 6 CLOCKS AND STAY LOW FOR 6 CLOCKS 
+ST_RESET_OP.OE =   RB8 # RB9 # RB10 ;
+ST_RESET_OP = 'B'0;
+
+
+//JP1_PIN3 = CLK025;
+
+
+
+/*
+
+
+USED REGS
+
+[E40000..E7FFFF] flashing space
+
+RTC_ADDRESS = (ADDR:[FF8960] 
+RTC_DATA =    (ADDR:[FF8962] 
+
+
+
+
+[FF8964]  sets latched and stored into NVRAM ROM bank settings in NVRAM REGISTER 7F (FF wil also work as bit 8 is ignored).
+This is the ROM FLASH BANK selects stored in NVRAM. These settings are loaded from NVRAM on machine RESET. 
+
+xxABCDEF xxxxxxxx
+
+A = PLD REGISTER ROM_DIS READ ONLY - READS ROM_DIS JUMPER, NOT ROM_DIS STORED IN NVRAM
+B = PLD REGISTER OF FLASH SELECT 2 READ ONLY
+C = PLD REGISTER OF FLASH SELECT 1 READ ONLY
+
+D = PLD REGISTER ROM_DIS WRITE ONLY STORED IN NVRAM 
+E = PLD REGISTER OF FLASH SELECT 2 STORED IN NVRAM 
+F = PLD REGISTER OF FLASH SELECT 1 STORED IN NVRAM
+
+x = don't care / write only 
+11111 = command to enable the NVRAM updates (writing any zeros and the register will not be updated) 
+
+NOTE - if bit "D" is HI, its the same as setting the physical jumper on the PCB to HI - it will boot from MB ROMS. 
+
+
+[FF8966] "temp" FLASH BANK SELECTS WRITE ONLY
+Because we can't swap ROM bank while ROM is running from flash, we need a second register which will override the first register. 
+This allows us to swap bank versions for a single bus cycle, so the CPU just treats the bank as a simple address and wont crash the OS changing banks.
+
+
+xxxxxxxx xxxxxxAB
+
+A = PLD PROGRAMMING / STATUS REGISTER FOR FLASH BANK 2
+B = PLD PROGRAMMING / STATUS REGISTER FOR FLASH BANK 1
+
+
+
+*/
+
+
+
+
+

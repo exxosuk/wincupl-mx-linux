@@ -1,0 +1,54 @@
+Name     16bit_counter;
+PartNo   ATF1502;
+Date     02/23/2025;
+Revision 1.1;
+Designer ChatGPT;
+Company  User Request;
+Assembly None;
+Location None;
+Device   f1502plcc44;
+
+/* Pin Assignments */
+PIN 1  = CLK;     /* Clock input */
+PIN 2  = RESET;   /* Asynchronous Reset */
+PIN 3  = EN;      /* Enable Counting */
+
+PIN 4  = Q0;      /* 16-bit Counter Outputs */
+PIN 5  = Q1;
+PIN 6  = Q2;
+PIN 7  = Q3;
+PIN 8  = Q4;
+PIN 9  = Q5;
+PIN 10 = Q6;
+PIN 11 = Q7;
+PIN 12 = Q8;
+PIN 13 = Q9;
+PIN 14 = Q10;
+PIN 15 = Q11;
+PIN 16 = Q12;
+PIN 17 = Q13;
+PIN 18 = Q14;
+PIN 19 = Q15;
+
+/* Counter Flip-Flops */
+Q0.d  = !Q0   & EN;  
+Q1.d  = Q1 $ (Q0 & EN);
+Q2.d  = Q2 $ (Q1 & Q0 & EN);
+Q3.d  = Q3 $ (Q2 & Q1 & Q0 & EN);
+Q4.d  = Q4 $ (Q3 & Q2 & Q1 & Q0 & EN);
+Q5.d  = Q5 $ (Q4 & Q3 & Q2 & Q1 & Q0 & EN);
+Q6.d  = Q6 $ (Q5 & Q4 & Q3 & Q2 & Q1 & Q0 & EN);
+Q7.d  = Q7 $ (Q6 & Q5 & Q4 & Q3 & Q2 & Q1 & Q0 & EN);
+Q8.d  = Q8 $ (Q7 & Q6 & Q5 & Q4 & Q3 & Q2 & Q1 & Q0 & EN);
+Q9.d  = Q9 $ (Q8 & Q7 & Q6 & Q5 & Q4 & Q3 & Q2 & Q1 & Q0 & EN);
+Q10.d = Q10 $ (Q9 & Q8 & Q7 & Q6 & Q5 & Q4 & Q3 & Q2 & Q1 & Q0 & EN);
+Q11.d = Q11 $ (Q10 & Q9 & Q8 & Q7 & Q6 & Q5 & Q4 & Q3 & Q2 & Q1 & Q0 & EN);
+Q12.d = Q12 $ (Q11 & Q10 & Q9 & Q8 & Q7 & Q6 & Q5 & Q4 & Q3 & Q2 & Q1 & Q0 & EN);
+Q13.d = Q13 $ (Q12 & Q11 & Q10 & Q9 & Q8 & Q7 & Q6 & Q5 & Q4 & Q3 & Q2 & Q1 & Q0 & EN);
+Q14.d = Q14 $ (Q13 & Q12 & Q11 & Q10 & Q9 & Q8 & Q7 & Q6 & Q5 & Q4 & Q3 & Q2 & Q1 & Q0 & EN);
+Q15.d = Q15 $ (Q14 & Q13 & Q12 & Q11 & Q10 & Q9 & Q8 & Q7 & Q6 & Q5 & Q4 & Q3 & Q2 & Q1 & Q0 & EN);
+
+/* Clock and Reset Control */
+[Q0..Q15].CK = CLK;
+//Q0..Q15.AR = RESET;  /* Asynchronous Reset */
+

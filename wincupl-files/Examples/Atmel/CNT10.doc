@@ -1,0 +1,389 @@
+
+*******************************************************************************
+                                     CNT10
+*******************************************************************************
+
+CUPL(WM)        5.0a Serial# 60008009
+Device          v750c  Library DLIB-h-40-2
+Created         Sun Feb 23 22:34:06 2025
+Name            CNT10
+Partno          atf750c
+Revision        01
+Date            07/21/00
+Designer        Yad PLD
+Company         Atmel Corporation
+Assembly        U00
+Location        San Jose
+
+===============================================================================
+                            Expanded Product Terms
+===============================================================================
+
+A0.t  =>
+    !LD
+  # A0 & !D0
+  # !A0 & D0
+
+A0.ckmux  =>
+    CLK
+
+A0.sp  =>
+    0 
+
+A1.t  =>
+    A1 & !D1 & LD
+  # !A1 & D1 & LD
+  # A0 & !LD
+
+A1.ckmux  =>
+    CLK
+
+A1.sp  =>
+    0 
+
+A2.t  =>
+    A2 & !D2 & LD
+  # !A2 & D2 & LD
+  # A0 & A1 & !LD
+
+A2.ckmux  =>
+    CLK
+
+A2.sp  =>
+    0 
+
+A3.t  =>
+    A3 & !D3 & LD
+  # !A3 & D3 & LD
+  # A0 & A1 & A2 & !LD
+
+A3.ckmux  =>
+    CLK
+
+A3.sp  =>
+    0 
+
+A4.t  =>
+    A4 & !D4 & LD
+  # !A4 & D4 & LD
+  # A0 & A1 & A2 & A3 & !LD
+
+A4.ckmux  =>
+    CLK
+
+A4.sp  =>
+    0 
+
+A5.t  =>
+    A5 & !D5 & LD
+  # !A5 & D5 & LD
+  # A0 & A1 & A2 & A3 & A4 & !LD
+
+A5.ckmux  =>
+    CLK
+
+A5.sp  =>
+    0 
+
+A6.t  =>
+    A6 & !D6 & LD
+  # !A6 & D6 & LD
+  # A0 & A1 & A2 & A3 & A4 & A5 & !LD
+
+A6.ckmux  =>
+    CLK
+
+A6.sp  =>
+    0 
+
+A7.t  =>
+    A7 & !D7 & LD
+  # !A7 & D7 & LD
+  # A0 & A1 & A2 & A3 & A4 & A5 & A6 & !LD
+
+A7.ckmux  =>
+    CLK
+
+A7.sp  =>
+    0 
+
+A8.t  =>
+    A8 & !D8 & LD
+  # !A8 & D8 & LD
+  # A0 & A1 & A2 & A3 & A4 & A5 & A6 & A7 & !LD
+
+A8.ckmux  =>
+    CLK
+
+A8.sp  =>
+    0 
+
+A9.t  =>
+    A9 & !D9 & LD
+  # !A9 & D9 & LD
+  # A0 & A1 & A2 & A3 & A4 & A5 & A6 & A7 & A8 & !LD
+
+A9.ckmux  =>
+    CLK
+
+A9.sp  =>
+    0 
+
+Q0.t  =>
+    !LD
+  # !A0 & Q0
+  # A0 & !Q0
+
+Q0.ckmux  =>
+    CLK
+
+Q0.sp  =>
+    0 
+
+Q1.t  =>
+    !A1 & LD & Q1
+  # A1 & LD & !Q1
+  # !LD & Q0
+
+Q1.ckmux  =>
+    CLK
+
+Q1.sp  =>
+    0 
+
+Q2.t  =>
+    !A2 & LD & Q2
+  # A2 & LD & !Q2
+  # !LD & Q0 & Q1
+
+Q2.ckmux  =>
+    CLK
+
+Q2.sp  =>
+    0 
+
+Q3.t  =>
+    !A3 & LD & Q3
+  # A3 & LD & !Q3
+  # !LD & Q0 & Q1 & Q2
+
+Q3.ckmux  =>
+    CLK
+
+Q3.sp  =>
+    0 
+
+Q4.t  =>
+    !A4 & LD & Q4
+  # A4 & LD & !Q4
+  # !LD & Q0 & Q1 & Q2 & Q3
+
+Q4.ckmux  =>
+    CLK
+
+Q4.sp  =>
+    0 
+
+Q5.t  =>
+    !A5 & LD & Q5
+  # A5 & LD & !Q5
+  # !LD & Q0 & Q1 & Q2 & Q3 & Q4
+
+Q5.ckmux  =>
+    CLK
+
+Q5.sp  =>
+    0 
+
+Q6.t  =>
+    !A6 & LD & Q6
+  # A6 & LD & !Q6
+  # !LD & Q0 & Q1 & Q2 & Q3 & Q4 & Q5
+
+Q6.ckmux  =>
+    CLK
+
+Q6.sp  =>
+    0 
+
+Q7.t  =>
+    !A7 & LD & Q7
+  # A7 & LD & !Q7
+  # !LD & Q0 & Q1 & Q2 & Q3 & Q4 & Q5 & Q6
+
+Q7.ckmux  =>
+    CLK
+
+Q7.sp  =>
+    0 
+
+Q8.t  =>
+    !A8 & LD & Q8
+  # A8 & LD & !Q8
+  # !LD & Q0 & Q1 & Q2 & Q3 & Q4 & Q5 & Q6 & Q7
+
+Q8.ckmux  =>
+    CLK
+
+Q8.sp  =>
+    0 
+
+Q9.t  =>
+    !A9 & LD & Q9
+  # A9 & LD & !Q9
+  # !LD & Q0 & Q1 & Q2 & Q3 & Q4 & Q5 & Q6 & Q7 & Q8
+
+Q9.ckmux  =>
+    CLK
+
+Q9.sp  =>
+    0 
+
+Q0.oe  =>
+    1 
+
+Q1.oe  =>
+    1 
+
+Q2.oe  =>
+    1 
+
+Q3.oe  =>
+    1 
+
+Q4.oe  =>
+    1 
+
+Q5.oe  =>
+    1 
+
+Q6.oe  =>
+    1 
+
+Q7.oe  =>
+    1 
+
+Q8.oe  =>
+    1 
+
+Q9.oe  =>
+    1 
+
+
+===============================================================================
+                                 Symbol Table
+===============================================================================
+
+Pin Variable                                    Pterms   Max     Min    
+Pol   Name              Ext     Pin     Type     Used   Pterms  Level   
+--- --------            ---     ---     ----    ------  ------  -----   
+
+    A0                          25       N        -       -       -     
+    A0                  t       25       M        3       4       0     
+    A0                  ckmux   25       M        1       1       1     
+    A0                  sp      25       M        1       1       1     
+    A1                          26       N        -       -       -     
+    A1                  t       26       M        3       5       0     
+    A1                  ckmux   26       M        1       1       1     
+    A1                  sp      26       M        1       1       1     
+    A2                          27       N        -       -       -     
+    A2                  t       27       M        3       6       0     
+    A2                  ckmux   27       M        1       1       1     
+    A2                  sp      27       M        1       1       1     
+    A3                          28       N        -       -       -     
+    A3                  t       28       M        3       7       0     
+    A3                  ckmux   28       M        1       1       1     
+    A3                  sp      28       M        1       1       1     
+    A4                          29       N        -       -       -     
+    A4                  t       29       M        3       8       0     
+    A4                  ckmux   29       M        1       1       1     
+    A4                  sp      29       M        1       1       1     
+    A5                          30       N        -       -       -     
+    A5                  t       30       M        3       8       0     
+    A5                  ckmux   30       M        1       1       1     
+    A5                  sp      30       M        1       1       1     
+    A6                          31       N        -       -       -     
+    A6                  t       31       M        3       7       0     
+    A6                  ckmux   31       M        1       1       1     
+    A6                  sp      31       M        1       1       1     
+    A7                          32       N        -       -       -     
+    A7                  t       32       M        3       6       0     
+    A7                  ckmux   32       M        1       1       1     
+    A7                  sp      32       M        1       1       1     
+    A8                          33       N        -       -       -     
+    A8                  t       33       M        3       5       0     
+    A8                  ckmux   33       M        1       1       1     
+    A8                  sp      33       M        1       1       1     
+    A9                          34       N        -       -       -     
+    A9                  t       34       M        3       4       0     
+    A9                  ckmux   34       M        1       1       1     
+    A9                  sp      34       M        1       1       1     
+    CLK                         1        V        -       -       -     
+    D0                          3        V        -       -       -     
+    D1                          4        V        -       -       -     
+    D2                          5        V        -       -       -     
+    D3                          6        V        -       -       -     
+    D4                          7        V        -       -       -     
+    D5                          8        V        -       -       -     
+    D6                          9        V        -       -       -     
+    D7                          10       V        -       -       -     
+    D8                          11       V        -       -       -     
+    D9                          13       V        -       -       -     
+    LD                          2        V        -       -       -     
+    Q0                          14       V        -       -       -     
+    Q0                  t       14       X        3       8       0     
+    Q0                  ckmux   14       X        1       1       1     
+    Q0                  sp      14       X        1       1       1     
+    Q1                          15       V        -       -       -     
+    Q1                  t       15       X        3       10      0     
+    Q1                  ckmux   15       X        1       1       1     
+    Q1                  sp      15       X        1       1       1     
+    Q2                          16       V        -       -       -     
+    Q2                  t       16       X        3       12      0     
+    Q2                  ckmux   16       X        1       1       1     
+    Q2                  sp      16       X        1       1       1     
+    Q3                          17       V        -       -       -     
+    Q3                  t       17       X        3       14      0     
+    Q3                  ckmux   17       X        1       1       1     
+    Q3                  sp      17       X        1       1       1     
+    Q4                          18       V        -       -       -     
+    Q4                  t       18       X        3       16      0     
+    Q4                  ckmux   18       X        1       1       1     
+    Q4                  sp      18       X        1       1       1     
+    Q5                          19       V        -       -       -     
+    Q5                  t       19       X        3       16      0     
+    Q5                  ckmux   19       X        1       1       1     
+    Q5                  sp      19       X        1       1       1     
+    Q6                          20       V        -       -       -     
+    Q6                  t       20       X        3       14      0     
+    Q6                  ckmux   20       X        1       1       1     
+    Q6                  sp      20       X        1       1       1     
+    Q7                          21       V        -       -       -     
+    Q7                  t       21       X        3       12      0     
+    Q7                  ckmux   21       X        1       1       1     
+    Q7                  sp      21       X        1       1       1     
+    Q8                          22       V        -       -       -     
+    Q8                  t       22       X        3       10      0     
+    Q8                  ckmux   22       X        1       1       1     
+    Q8                  sp      22       X        1       1       1     
+    Q9                          23       V        -       -       -     
+    Q9                  t       23       X        3       8       0     
+    Q9                  ckmux   23       X        1       1       1     
+    Q9                  sp      23       X        1       1       1     
+    Q0                  oe      14       D        1       1       0     
+    Q1                  oe      15       D        1       1       0     
+    Q2                  oe      16       D        1       1       0     
+    Q3                  oe      17       D        1       1       0     
+    Q4                  oe      18       D        1       1       0     
+    Q5                  oe      19       D        1       1       0     
+    Q6                  oe      20       D        1       1       0     
+    Q7                  oe      21       D        1       1       0     
+    Q8                  oe      22       D        1       1       0     
+    Q9                  oe      23       D        1       1       0     
+
+
+LEGEND    D : default variable         F : field      G : group
+          I : intermediate variable    N : node       M : extended node
+          U : undefined                V : variable   X : extended variable
+          T : function
+

@@ -1,0 +1,206 @@
+
+*******************************************************************************
+                                    Count10
+*******************************************************************************
+
+CUPL(WM)        5.0a Serial# 60008009
+Device          g16v8ms  Library DLIB-h-40-11
+Created         Sun Feb 23 22:24:32 2025
+Name            Count10
+Partno          CA0018
+Revision        02
+Date            12/19/99
+Designer        Kahl
+Company         Logical Devices, Inc.
+Assembly        None
+Location        None
+
+===============================================================================
+                            Expanded Product Terms
+===============================================================================
+
+Q0.d  =>
+    !Q0 & !Q1 & !Q2 & !Q3 & !clr & !dir
+  # !Q0 & !Q1 & !Q2 & !Q3 & !clr & dir
+  # 0 
+  # 0 
+  # 0 
+  # 0 
+  # !Q0 & Q1 & !Q2 & !Q3 & !clr & !dir
+  # !Q0 & Q1 & !Q2 & !Q3 & !clr & dir
+  # 0 
+  # 0 
+  # 0 
+  # 0 
+  # !Q0 & !Q1 & Q2 & !Q3 & !clr & !dir
+  # !Q0 & !Q1 & Q2 & !Q3 & !clr & dir
+  # 0 
+  # 0 
+  # 0 
+  # 0 
+  # !Q0 & Q1 & Q2 & !Q3 & !clr & !dir
+  # !Q0 & Q1 & Q2 & !Q3 & !clr & dir
+  # 0 
+  # 0 
+  # 0 
+  # 0 
+  # !Q0 & !Q1 & !Q2 & Q3 & !clr & !dir
+  # !Q0 & !Q1 & !Q2 & Q3 & !clr & dir
+  # 0 
+  # 0 
+  # 0 
+  # 0 
+
+Q1.d  =>
+    0 
+  # 0 
+  # 0 
+  # Q0 & !Q1 & !Q2 & !Q3 & !clr & !dir
+  # 0 
+  # 0 
+  # !Q0 & Q1 & !Q2 & !Q3 & !clr & !dir
+  # 0 
+  # 0 
+  # 0 
+  # Q0 & Q1 & !Q2 & !Q3 & !clr & dir
+  # 0 
+  # 0 
+  # !Q0 & !Q1 & Q2 & !Q3 & !clr & dir
+  # 0 
+  # Q0 & !Q1 & Q2 & !Q3 & !clr & !dir
+  # 0 
+  # 0 
+  # !Q0 & Q1 & Q2 & !Q3 & !clr & !dir
+  # 0 
+  # 0 
+  # 0 
+  # Q0 & Q1 & Q2 & !Q3 & !clr & dir
+  # 0 
+  # 0 
+  # !Q0 & !Q1 & !Q2 & Q3 & !clr & dir
+  # 0 
+  # 0 
+  # 0 
+  # 0 
+
+Q2.d  =>
+    0 
+  # 0 
+  # 0 
+  # 0 
+  # 0 
+  # 0 
+  # 0 
+  # 0 
+  # 0 
+  # Q0 & Q1 & !Q2 & !Q3 & !clr & !dir
+  # 0 
+  # 0 
+  # !Q0 & !Q1 & Q2 & !Q3 & !clr & !dir
+  # 0 
+  # 0 
+  # Q0 & !Q1 & Q2 & !Q3 & !clr & !dir
+  # Q0 & !Q1 & Q2 & !Q3 & !clr & dir
+  # 0 
+  # !Q0 & Q1 & Q2 & !Q3 & !clr & !dir
+  # !Q0 & Q1 & Q2 & !Q3 & !clr & dir
+  # 0 
+  # 0 
+  # Q0 & Q1 & Q2 & !Q3 & !clr & dir
+  # 0 
+  # 0 
+  # !Q0 & !Q1 & !Q2 & Q3 & !clr & dir
+  # 0 
+  # 0 
+  # 0 
+  # 0 
+
+Q3.d  =>
+    0 
+  # !Q0 & !Q1 & !Q2 & !Q3 & !clr & dir
+  # 0 
+  # 0 
+  # 0 
+  # 0 
+  # 0 
+  # 0 
+  # 0 
+  # 0 
+  # 0 
+  # 0 
+  # 0 
+  # 0 
+  # 0 
+  # 0 
+  # 0 
+  # 0 
+  # 0 
+  # 0 
+  # 0 
+  # Q0 & Q1 & Q2 & !Q3 & !clr & !dir
+  # 0 
+  # 0 
+  # !Q0 & !Q1 & !Q2 & Q3 & !clr & !dir
+  # 0 
+  # 0 
+  # 0 
+  # Q0 & !Q1 & !Q2 & Q3 & !clr & dir
+  # 0 
+
+carry =>
+    !Q0 & !Q1 & !Q2 & !Q3 & !clr & dir
+  # Q0 & !Q1 & !Q2 & Q3 & !clr & !dir
+
+clear =>
+    clr
+
+count =>
+    Q3 , Q2 , Q1 , Q0
+
+down =>
+    !clr & dir
+
+mode =>
+    clr , dir
+
+up =>
+    !clr & !dir
+
+carry.oe  =>
+    1 
+
+
+===============================================================================
+                                 Symbol Table
+===============================================================================
+
+Pin Variable                                    Pterms   Max     Min    
+Pol   Name              Ext     Pin     Type     Used   Pterms  Level   
+--- --------            ---     ---     ----    ------  ------  -----   
+
+    Q0                          17       V        -       -       -     
+    Q0                  d       17       X        30      8       0     
+    Q1                          16       V        -       -       -     
+    Q1                  d       16       X        30      8       0     
+    Q2                          15       V        -       -       -     
+    Q2                  d       15       X        30      8       0     
+    Q3                          14       V        -       -       -     
+    Q3                  d       14       X        30      8       0     
+    carry                       18       V        2       7       0     
+    clear                       0        I        1       -       -     
+    clk                         1        V        -       -       -     
+    clr                         2        V        -       -       -     
+    count                       0        F        -       -       -     
+    dir                         3        V        -       -       -     
+    down                        0        I        1       -       -     
+    mode                        0        F        -       -       -     
+ !  oe                          11       V        -       -       -     
+    up                          0        I        1       -       -     
+    carry               oe      18       D        1       1       0     
+
+
+LEGEND    D : default variable         F : field      G : group
+          I : intermediate variable    N : node       M : extended node
+          U : undefined                V : variable   X : extended variable
+          T : function
+

@@ -1,0 +1,60 @@
+%SIGNAL
+PIN   2 =  A1 
+PIN   3 =  A2 
+PIN   5 =  A3 
+PIN   6 =  A4 
+PIN   8 =  A5 
+PIN  10 =  A6 
+PIN  11 =  A7 
+PIN  12 =  A8 
+PIN  13 =  A9 
+PIN  14 =  A10 
+PIN  15 =  A11 
+PIN  18 =  A12 
+PIN  19 =  A13 
+PIN  20 =  A14 
+PIN  21 =  A15 
+PIN  22 =  A16 
+PIN  23 =  A17 
+PIN  25 =  A18 
+PIN  27 =  A19 
+PIN  28 =  A20 
+PIN  30 =  A21 
+PIN  31 =  A22 
+PIN  33 =  A23 
+PIN  39 =  BG_CPU 
+PIN  38 =  BG_SYS 
+PIN  44 =  CLK8 
+PIN  37 =  CLK16 
+PIN   0 =  CLK_SEL 
+PIN  43 =  CPU_CLK 
+PIN  42 = !ROM_OE 
+PIN  34 =  ST_AS 
+PIN  35 =  ST_DTACK 
+PIN  40 =  SW 
+%END
+
+%FIELD
+%END
+
+%EQUATION
+BG_SYS.d  =>
+    BG_CPU
+  # !ST_AS
+
+BG_SYS.ck  =>
+    CLK8
+
+BG_SYS.oe  =>
+    !BG_CPU & ST_AS
+
+CPU_CLK =>
+    CLK8
+
+ST_DTACK =>
+    0 
+
+ST_DTACK.oe  =>
+    ROM_OE & !ST_AS
+
+%END

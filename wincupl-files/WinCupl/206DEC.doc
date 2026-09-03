@@ -1,0 +1,93 @@
+
+*******************************************************************************
+                                    206dec
+*******************************************************************************
+
+CUPL(WM)        5.0a Serial# 60008009
+Device          f1502isptqfp44  Library DLIB-h-40-1
+Created         Tue Feb 11 14:23:44 2020
+Name            206dec 
+Partno          00 
+Revision        02 
+Date            31/01/2020 
+Designer        exxos 
+Company         exxos 
+Assembly        None 
+Location        bedroom
+
+===============================================================================
+                            Expanded Product Terms
+===============================================================================
+
+BG_SYS.d  =>
+    BG_CPU
+  # !ST_AS
+
+BG_SYS.ck  =>
+    CLK8
+
+BG_SYS.oe  =>
+    !BG_CPU & ST_AS
+
+CPU_CLK =>
+    CLK8
+
+ST_DTACK =>
+    0 
+
+ST_DTACK.oe  =>
+    ROM_OE & !ST_AS
+
+
+===============================================================================
+                                 Symbol Table
+===============================================================================
+
+Pin Variable                                    Pterms   Max     Min    
+Pol   Name              Ext     Pin     Type     Used   Pterms  Level   
+--- --------            ---     ---     ----    ------  ------  -----   
+
+    A1                          2        V        -       -       -     
+    A2                          3        V        -       -       -     
+    A3                          5        V        -       -       -     
+    A4                          6        V        -       -       -     
+    A5                          8        V        -       -       -     
+    A6                          10       V        -       -       -     
+    A7                          11       V        -       -       -     
+    A8                          12       V        -       -       -     
+    A9                          13       V        -       -       -     
+    A10                         14       V        -       -       -     
+    A11                         15       V        -       -       -     
+    A12                         18       V        -       -       -     
+    A13                         19       V        -       -       -     
+    A14                         20       V        -       -       -     
+    A15                         21       V        -       -       -     
+    A16                         22       V        -       -       -     
+    A17                         23       V        -       -       -     
+    A18                         25       V        -       -       -     
+    A19                         27       V        -       -       -     
+    A20                         28       V        -       -       -     
+    A21                         30       V        -       -       -     
+    A22                         31       V        -       -       -     
+    A23                         33       V        -       -       -     
+    BG_CPU                      39       V        -       -       -     
+    BG_SYS                      38       V        -       -       -     
+    BG_SYS              d       38       X        2       0       1     
+    BG_SYS              ck      38       X        1       0       1     
+    BG_SYS              oe      38       X        1       0       1     
+    CLK8                        44       V        -       -       -     
+    CLK16                       37       V        -       -       -     
+    CLK_SEL                     0        N        -       -       -     
+    CPU_CLK                     43       V        1       0       1     
+ !  ROM_OE                      42       V        -       -       -     
+    ST_AS                       34       V        -       -       -     
+    ST_DTACK                    35       V        1       0       1     
+    ST_DTACK            oe      35       X        1       0       1     
+    SW                          40       V        -       -       -     
+
+
+LEGEND    D : default variable         F : field      G : group
+          I : intermediate variable    N : node       M : extended node
+          U : undefined                V : variable   X : extended variable
+          T : function
+

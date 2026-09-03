@@ -1,0 +1,41 @@
+#$ TOOL CUPL
+# Berkeley PLA format generated using CUPL(WM) 5.0a
+# Serial#  60008009
+# Created  Tue Feb 11 14:23:44 2020
+#
+#    Name        206dec
+#    Partno      00
+#    Revision    02
+#    Date        31/01/2020
+#    Designer    exxos
+#    Company     exxos
+#    Assembly    None
+#    Location    bedroom
+#
+#$ TITLE  206dec
+#$ PROPERTY ATMEL JTAG = ON
+#$ PROPERTY ATMEL LOGIC_DOUBLING = OFF
+#$ PROPERTY ATMEL CASCADE_LOGIC = OFF
+#$ PROPERTY ATMEL PREASSIGN keep
+#$ PROPERTY ATMEL OUTPUT_FAST ON
+#$ PROPERTY ATMEL POWER_RESET ON
+#$ PROPERTY ATMEL PIN_KEEP OFF
+#$ MODULE  206dec
+#$ JEDECFILE  206dec
+#$ DEVICE  f1502isptqfp44
+#$ PINS  32 A1+:2 A2+:3 A3+:5 A4+:6 A5+:8 A6+:10 A7+:11 A8+:12 A9+:13 A10+:14 A11+:15 A12+:18 A13+:19 A14+:20 A15+:21 A16+:22 A17+:23 A18+:25 A19+:27 A20+:28 A21+:30 A22+:31 A23+:33 BG_CPU+:39 BG_SYS+:38 CLK8+:44 CLK16+:37 CPU_CLK+:43 ROM_OE+:42 ST_AS+:34 ST_DTACK+:35 SW+:40 
+#$ NODES  1 CLK_SEL+ 
+.i 4
+.o 6
+.type f
+.ilb  BG_CPU CLK8 ROM_OE ST_AS 
+.ob   BG_SYS.REG BG_SYS.C BG_SYS.OE CPU_CLK ST_DTACK ST_DTACK.OE 
+.phase 111111
+.p 6
+1--- 100000
+---0 100000
+-1-- 010100
+0--1 001000
+---- 000000
+--00 000001
+.e

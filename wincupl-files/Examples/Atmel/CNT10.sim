@@ -1,0 +1,271 @@
+%SIGNAL
+PIN  25 =  A0 
+PIN  26 =  A1 
+PIN  27 =  A2 
+PIN  28 =  A3 
+PIN  29 =  A4 
+PIN  30 =  A5 
+PIN  31 =  A6 
+PIN  32 =  A7 
+PIN  33 =  A8 
+PIN  34 =  A9 
+PIN   1 =  CLK 
+PIN   3 =  D0 
+PIN   4 =  D1 
+PIN   5 =  D2 
+PIN   6 =  D3 
+PIN   7 =  D4 
+PIN   8 =  D5 
+PIN   9 =  D6 
+PIN  10 =  D7 
+PIN  11 =  D8 
+PIN  13 =  D9 
+PIN   2 =  LD 
+PIN  14 =  Q0 
+PIN  15 =  Q1 
+PIN  16 =  Q2 
+PIN  17 =  Q3 
+PIN  18 =  Q4 
+PIN  19 =  Q5 
+PIN  20 =  Q6 
+PIN  21 =  Q7 
+PIN  22 =  Q8 
+PIN  23 =  Q9 
+%END
+
+%FIELD
+%END
+
+%EQUATION
+A0.t  =>
+    !LD
+  # A0 & !D0
+  # !A0 & D0
+
+A0.ckmux  =>
+    CLK
+
+A0.sp A1.sp A2.sp A3.sp A4.sp A5.sp A6.sp A7.sp A8.sp A9.sp Q0.sp Q1.sp Q2.sp Q3.sp Q4.sp Q5.sp Q6.sp Q7.sp Q8.sp Q9.sp  =>
+    0 
+
+A1.t  =>
+    A1 & !D1 & LD
+  # !A1 & D1 & LD
+  # A0 & !LD
+
+A1.ckmux  =>
+    CLK
+
+A1.sp  =>
+    
+A2.t  =>
+    A2 & !D2 & LD
+  # !A2 & D2 & LD
+  # A0 & A1 & !LD
+
+A2.ckmux  =>
+    CLK
+
+A2.sp  =>
+    
+A3.t  =>
+    A3 & !D3 & LD
+  # !A3 & D3 & LD
+  # A0 & A1 & A2 & !LD
+
+A3.ckmux  =>
+    CLK
+
+A3.sp  =>
+    
+A4.t  =>
+    A4 & !D4 & LD
+  # !A4 & D4 & LD
+  # A0 & A1 & A2 & A3 & !LD
+
+A4.ckmux  =>
+    CLK
+
+A4.sp  =>
+    
+A5.t  =>
+    A5 & !D5 & LD
+  # !A5 & D5 & LD
+  # A0 & A1 & A2 & A3 & A4 & !LD
+
+A5.ckmux  =>
+    CLK
+
+A5.sp  =>
+    
+A6.t  =>
+    A6 & !D6 & LD
+  # !A6 & D6 & LD
+  # A0 & A1 & A2 & A3 & A4 & A5 & !LD
+
+A6.ckmux  =>
+    CLK
+
+A6.sp  =>
+    
+A7.t  =>
+    A7 & !D7 & LD
+  # !A7 & D7 & LD
+  # A0 & A1 & A2 & A3 & A4 & A5 & A6 & !LD
+
+A7.ckmux  =>
+    CLK
+
+A7.sp  =>
+    
+A8.t  =>
+    A8 & !D8 & LD
+  # !A8 & D8 & LD
+  # A0 & A1 & A2 & A3 & A4 & A5 & A6 & A7 & !LD
+
+A8.ckmux  =>
+    CLK
+
+A8.sp  =>
+    
+A9.t  =>
+    A9 & !D9 & LD
+  # !A9 & D9 & LD
+  # A0 & A1 & A2 & A3 & A4 & A5 & A6 & A7 & A8 & !LD
+
+A9.ckmux  =>
+    CLK
+
+A9.sp  =>
+    
+Q0.t  =>
+    !LD
+  # !A0 & Q0
+  # A0 & !Q0
+
+Q0.ckmux  =>
+    CLK
+
+Q0.sp  =>
+    
+Q1.t  =>
+    !A1 & LD & Q1
+  # A1 & LD & !Q1
+  # !LD & Q0
+
+Q1.ckmux  =>
+    CLK
+
+Q1.sp  =>
+    
+Q2.t  =>
+    !A2 & LD & Q2
+  # A2 & LD & !Q2
+  # !LD & Q0 & Q1
+
+Q2.ckmux  =>
+    CLK
+
+Q2.sp  =>
+    
+Q3.t  =>
+    !A3 & LD & Q3
+  # A3 & LD & !Q3
+  # !LD & Q0 & Q1 & Q2
+
+Q3.ckmux  =>
+    CLK
+
+Q3.sp  =>
+    
+Q4.t  =>
+    !A4 & LD & Q4
+  # A4 & LD & !Q4
+  # !LD & Q0 & Q1 & Q2 & Q3
+
+Q4.ckmux  =>
+    CLK
+
+Q4.sp  =>
+    
+Q5.t  =>
+    !A5 & LD & Q5
+  # A5 & LD & !Q5
+  # !LD & Q0 & Q1 & Q2 & Q3 & Q4
+
+Q5.ckmux  =>
+    CLK
+
+Q5.sp  =>
+    
+Q6.t  =>
+    !A6 & LD & Q6
+  # A6 & LD & !Q6
+  # !LD & Q0 & Q1 & Q2 & Q3 & Q4 & Q5
+
+Q6.ckmux  =>
+    CLK
+
+Q6.sp  =>
+    
+Q7.t  =>
+    !A7 & LD & Q7
+  # A7 & LD & !Q7
+  # !LD & Q0 & Q1 & Q2 & Q3 & Q4 & Q5 & Q6
+
+Q7.ckmux  =>
+    CLK
+
+Q7.sp  =>
+    
+Q8.t  =>
+    !A8 & LD & Q8
+  # A8 & LD & !Q8
+  # !LD & Q0 & Q1 & Q2 & Q3 & Q4 & Q5 & Q6 & Q7
+
+Q8.ckmux  =>
+    CLK
+
+Q8.sp  =>
+    
+Q9.t  =>
+    !A9 & LD & Q9
+  # A9 & LD & !Q9
+  # !LD & Q0 & Q1 & Q2 & Q3 & Q4 & Q5 & Q6 & Q7 & Q8
+
+Q9.ckmux  =>
+    CLK
+
+Q9.sp  =>
+    
+Q0.oe  =>
+    1 
+
+Q1.oe  =>
+    1 
+
+Q2.oe  =>
+    1 
+
+Q3.oe  =>
+    1 
+
+Q4.oe  =>
+    1 
+
+Q5.oe  =>
+    1 
+
+Q6.oe  =>
+    1 
+
+Q7.oe  =>
+    1 
+
+Q8.oe  =>
+    1 
+
+Q9.oe  =>
+    1 
+
+%END
