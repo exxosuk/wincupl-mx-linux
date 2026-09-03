@@ -48,21 +48,43 @@ do_install() {
     echo "==> Using WinCUPL from: $src"
 
     echo "==> Checking for Wine..."
-    if ! command -v wine >/dev/null 2>&1; then
-        sudo dpkg --add-architecture i386
-        sudo apt update
-        sudo apt install -y wine
-    fi
-    # WinCUPL is a 32-bit executable. Even in a 64-bit prefix, Wine needs the
-    # 32-bit loader (wine32) to run it through WoW64. Without it the process
-    # exits silently -- "failed to load syswow64/ntdll.dll" in the log, nothing
-    # on screen. The check above only ensures `wine` is present, which on a
-    # 64-bit system means wine64 alone; wine32:i386 must be installed separately.
-    if ! dpkg -l wine32 2>/dev/null | grep -q '^ii'; then
-        echo "    Installing wine32 (needed for 32-bit programs)..."
-        sudo dpkg --add-architecture i386 2>/dev/null || true
-        sudo apt update
-        sudo apt install -y wine32:i386
+    ARCH=$(dpkg --print-architecture)
+
+    if [ "$ARCH" = "amd64" ]; then
+        # 64-bit system: need both wine64 and wine32.
+        # WinCUPL is a 32-bit executable. On a 64-bit system Wine needs the
+        # 32-bit loader (wine32) to run it through WoW64. Without it the
+        # process exits silently -- "failed to load syswow64/ntdll.dll" in
+        # the log, nothing on screen.
+        if ! command -v wine >/dev/null 2>&1; then
+            sudo apt update
+            sudo apt install -y wine
+        fi
+        if ! dpkg -l wine32 2>/dev/null | grep -q '^ii'; then
+            echo "    Installing wine32 (needed for 32-bit programs on 64-bit)..."
+            sudo dpkg --add-architecture i386 2>/dev/null || true
+            sudo apt update
+            if ! sudo apt install -y wine32:i386 2>/dev/null; then
+                # MX Linux ships custom libsystemd0/libudev1 that conflict
+                # with Debian's i386 versions. apt refuses to install wine32
+                # because it cannot reconcile the version numbers. Work around
+                # it by installing the two blocking i386 deps directly, then
+                # retry wine32.
+                echo "    apt failed -- working around MX systemd version conflict..."
+                tmp=$(mktemp -d)
+                (cd "$tmp" && apt download libsystemd0:i386 libudev1:i386 2>/dev/null \
+                    && sudo dpkg --force-depends -i libsystemd0_*_i386.deb libudev1_*_i386.deb) \
+                    && sudo apt install -y --fix-broken wine32:i386 \
+                    || { echo "ERROR: could not install wine32. Install it by hand and re-run." >&2; exit 1; }
+                rm -rf "$tmp"
+            fi
+        fi
+    else
+        # 32-bit system (i386): wine32 is the native package.
+        if ! command -v wine >/dev/null 2>&1; then
+            sudo apt update
+            sudo apt install -y wine32
+        fi
     fi
     command -v curl >/dev/null 2>&1 || sudo apt install -y curl
     command -v cabextract >/dev/null 2>&1 || sudo apt install -y cabextract
