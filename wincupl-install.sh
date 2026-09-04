@@ -86,19 +86,7 @@ do_install() {
             sudo apt install -y wine32
         fi
     fi
-    command -v curl >/dev/null 2>&1 || sudo apt install -y curl
-    command -v cabextract >/dev/null 2>&1 || sudo apt install -y cabextract
     command -v wrestool >/dev/null 2>&1 || sudo apt install -y icoutils
-
-    echo "==> Getting winetricks (it fetches the Microsoft runtimes)..."
-    winetricks_bin=$(command -v winetricks || true)
-    if [ -z "$winetricks_bin" ]; then
-        mkdir -p "$BIN_DIR"
-        curl -sL --fail -o "$BIN_DIR/winetricks" \
-            https://raw.githubusercontent.com/Winetricks/winetricks/master/src/winetricks
-        chmod +x "$BIN_DIR/winetricks"
-        winetricks_bin="$BIN_DIR/winetricks"
-    fi
 
     # A default (64-bit) prefix, not a 32-bit one. WinCUPL is a 32-bit
     # program and a 32-bit prefix looks like the obvious choice, but tested
@@ -107,61 +95,44 @@ do_install() {
     # syswow64 and WoW64 runs the program perfectly well.
     if [ ! -d "$PREFIX" ]; then
         echo "==> Creating a dedicated Wine prefix at $PREFIX..."
-        WINEPREFIX="$PREFIX" wineboot --init >/dev/null 2>&1
+        WINEPREFIX="$PREFIX" wineboot --init 2>&1 | grep -v '^wine:' || true
+        # Give wineboot time to finish writing the prefix.
+        WINEPREFIX="$PREFIX" wineserver -w 2>/dev/null || sleep 3
     fi
 
-    echo "==> Installing the VB6 runtime and common controls..."
-    # vb6run      - MSVBVM60.DLL, without which the program exits silently
-    # comctl32ocx - COMCTL32.OCX, or it stops with "runtime error 339"
-    # comdlg32ocx - COMDLG32.OCX, the same error again the moment you open a
-    #               file dialog
-    # richtx32    - RICHTX32.OCX, the editor. Missing, a .PLD opens into
-    #               nothing and the Edit/Run/Utilities menus never appear
-    # tabctl32    - TABCTL32.OCX, the tabbed dialogs
-    # Each one only shows up once the previous is satisfied, which is why they
-    # are all installed up front rather than waiting to be asked for. The list
-    # came from reading the controls named inside Wincupl.exe, not from
-    # clicking about until it stopped complaining.
-    # richtx32 is the one that matters most after the runtime: it is the
-    # editor control, and without it opening a .PLD silently does nothing at
-    # all - the file dialog works, the file is read, and no window appears.
-    WINEPREFIX="$PREFIX" "$winetricks_bin" -q \
-        vb6run comctl32ocx comdlg32ocx richtx32 tabctl32 >/dev/null 2>&1 || true
-
-    echo "==> Installing the extra controls WinCUPL needs..."
-    # WinCUPL's Windows installer registered a Desaware control that does not
-    # ship in the program folder: DWSBC32.OCX, which in turn needs DWSPY32.DLL
-    # and MFC40.DLL. Without them the program starts and then stops on
-    # "Dwsbc32.ocx missing". They are not redistributable, so they are taken
-    # from a Windows installation - COPIED IN, never referenced in place, so
-    # nothing here depends on that drive still being mounted afterwards.
+    echo "==> Installing the VB6 runtime and controls..."
+    # Everything WinCUPL needs is bundled in deps/. No network downloads,
+    # no winetricks. The list came from reading the EXE's imports (objdump -p),
+    # not from clicking until it stopped complaining.
+    #
+    # msvbvm60.dll  - VB6 runtime; without it the program exits silently
+    # comctl32.ocx  - common controls; "runtime error 339" without it
+    # comdlg32.ocx  - common dialogs; same error on file-open
+    # richtx32.ocx  - rich text editor; without it a .PLD opens into nothing
+    # tabctl32.ocx  - tabbed dialogs
+    # mscomctl.ocx  - MS common controls (treeview, listview)
+    # mscomct2.ocx  - MS common controls 2 (date picker, etc.)
+    # dwsbc32.ocx   - Desaware StatusBar; "Dwsbc32.ocx missing" without it
+    # dwspy32.dll   - Desaware Spy (needed by dwsbc32)
+    # mfc40.dll     - MFC runtime (needed by dwsbc32)
+    # comct232.ocx  - common controls 2 (animation, up-down)
+    #
+    # Sources: msvbvm60.dll and the OCXs are from the VB6 SP6 redistributable
+    # (Microsoft KB2708437). dwsbc32/dwspy32 are Desaware controls that shipped
+    # with WinCUPL's original Windows installer. See README.md for details.
+    depsdir="$(cd "$(dirname "$0")" && pwd)/deps"
     sys32="$PREFIX/drive_c/windows/syswow64"
     [ -d "$sys32" ] || sys32="$PREFIX/drive_c/windows/system32"
-    for ocx in dwsbc32.ocx dwspy32.dll mfc40.dll comct232.ocx; do
-        [ -f "$sys32/$ocx" ] && continue
-        found=""
-        # These ship in deps/ beside this script. Nothing is read from a
-        # Windows partition during a normal install - the scan below is only a
-        # rescue for someone who has deleted deps/, and even then the file is
-        # COPIED IN, so the install never depends on that drive afterwards.
-        for d in "$(cd "$(dirname "$0")" && pwd)/deps" "$src/deps"; do
-            [ -f "$d/$ocx" ] && found="$d/$ocx" && break
-        done
-        if [ -z "$found" ]; then
-            found=$(find /media /mnt -maxdepth 5 -ipath "*/Windows/SysWOW64/$ocx" \
-                    -o -maxdepth 5 -ipath "*/Windows/System32/$ocx" 2>/dev/null | head -n1)
-        fi
-        if [ -n "$found" ]; then
-            cp "$found" "$sys32/$ocx"
-            echo "    $ocx <- $found"
+
+    for f in msvbvm60.dll comctl32.ocx comdlg32.ocx richtx32.ocx tabctl32.ocx \
+             mscomctl.ocx mscomct2.ocx dwsbc32.ocx dwspy32.dll mfc40.dll comct232.ocx; do
+        if [ -f "$depsdir/$f" ]; then
+            cp "$depsdir/$f" "$sys32/$f"
+            echo "    + $f"
         else
-            echo "    WARNING: $ocx not found. WinCUPL will stop on it."
-            echo "    Copy it from a Windows machine into: $(dirname "$0")/deps/"
+            echo "    WARNING: $f not found in deps/. WinCUPL may not start."
         fi
     done
-    # mfc40 can come from winetricks if no Windows install is around
-    [ -f "$sys32/mfc40.dll" ] || \
-        WINEPREFIX="$PREFIX" "$winetricks_bin" -q mfc40 >/dev/null 2>&1 || true
 
     echo "==> Copying WinCUPL into the prefix as C:\\Wincupl..."
     target="$PREFIX/drive_c/Wincupl"
