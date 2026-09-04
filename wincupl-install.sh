@@ -47,6 +47,35 @@ do_install() {
     src=$(find_source "${1:-}")
     echo "==> Using WinCUPL from: $src"
 
+# Is 32-bit Wine present?
+#
+# NOT the same question as "is the wine32 package installed". WinCUPL needs the
+# 32-bit loader, and there is more than one way to have it: Debian's wine32,
+# wine32-development, or a WineHQ build (wine-staging, wine-devel) that installs
+# under /opt and carries its own i386 tree. This PC runs winehq-staging 9.21 with
+# wine-staging-i386:i386 and has full 32-bit support, but no package called
+# wine32 -- so a dpkg name check said "missing" and would have gone on to apt
+# install wine32:i386 on top of a working WineHQ install.
+#
+# So ask the filesystem what the wine on PATH actually has, and only fall back to
+# package names for wine builds old enough not to use the i386-windows layout.
+wine_has_32bit() {
+    command -v wine >/dev/null 2>&1 || return 1
+    local bin root d
+    bin=$(readlink -f "$(command -v wine)")
+    root=$(dirname "$(dirname "$bin")")          # /opt/wine-staging, or /usr
+    for d in "$root/lib/wine/i386-windows" \
+             "$root/lib64/wine/i386-windows" \
+             "$root/lib/i386-linux-gnu/wine" \
+             /usr/lib/wine/i386-windows \
+             /usr/lib/i386-linux-gnu/wine; do
+        [ -d "$d" ] && return 0
+    done
+    # wine 5 and older: no i386-windows tree, so trust the package name.
+    dpkg -l wine32 wine32-development 2>/dev/null | grep -q '^ii' && return 0
+    return 1
+}
+
     echo "==> Checking for Wine..."
     ARCH=$(dpkg --print-architecture)
 
@@ -60,7 +89,7 @@ do_install() {
             sudo apt update
             sudo apt install -y wine
         fi
-        if ! dpkg -l wine32 2>/dev/null | grep -q '^ii'; then
+        if ! wine_has_32bit; then
             echo "    Installing wine32 (needed for 32-bit programs on 64-bit)..."
             sudo dpkg --add-architecture i386 2>/dev/null || true
             sudo apt update
@@ -244,7 +273,16 @@ EOF
 }
 
 do_uninstall() {
-    read -p "Remove WinCUPL and its Wine prefix ($PREFIX)? [y/N] " confirm
+    # `set -e` plus `read` is a trap: with no terminal, read returns non-zero at
+    # EOF and the script dies right here -- no removal, no "Cancelled.", no error,
+    # exit status 0. It looks exactly like a successful uninstall that removed
+    # nothing. Keep the prompt for people, and take --yes or a non-tty as consent.
+    local confirm=""
+    if [ "${1:-}" = "--yes" ] || [ ! -t 0 ]; then
+        confirm=y
+    else
+        read -r -p "Remove WinCUPL and its Wine prefix ($PREFIX)? [y/N] " confirm || confirm=""
+    fi
     [[ "$confirm" =~ ^[Yy]$ ]] || { echo "Cancelled."; exit 0; }
     rm -rf "$PREFIX"
     rm -f "$LAUNCHER" "$DESKTOP_DIR/wincupl.desktop" "$BIN_DIR/wincupl"
@@ -254,6 +292,6 @@ do_uninstall() {
 
 case "${1:-install}" in
     install)   do_install "${2:-}" ;;
-    uninstall) do_uninstall ;;
+    uninstall) do_uninstall "${2:-}" ;;
     *)         usage ;;
 esac
